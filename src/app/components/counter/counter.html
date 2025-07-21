@@ -1,0 +1,7 @@
+<div class="flex mb-1">
+  <button [disabled]="value <= 0" class="bg-blue-500 text-white px-2 rounded-md disabled:opacity-50" (click)="increment(-1)">-</button>
+  <p>{{ value }}</p>
+  @if (value < 10) {
+    <button class="bg-blue-500 text-white px-2 rounded-md disabled:opacity-50" (click)="increment(1)">+</button>
+  }
+</div>

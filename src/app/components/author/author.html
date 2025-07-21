@@ -1,0 +1,20 @@
+<div class="shadow bg-white rounded-lg px-4 py-3 w-1/4">
+  <div class="flex items-center gap-3">
+    <p class="font-bold">{{ author.firstname }} {{ author.name }}</p>
+    <div class="w-10 h-10">
+      @if (showAvatar) {
+        <img class="rounded-full" [src]="author.avatar" [alt]="`${author.firstname} ${author.name}`" />
+      }
+    </div>
+    <button class="border border-gray-300 rounded-md px-2 shadow" (click)="toggleAvatar()">
+      @if (showAvatar) {
+        Cacher
+      } @else {
+        Afficher
+      }
+    </button>
+  </div>
+  <p>Née le {{ author.getFormattedBirthday() }}</p>
+  <p>Âge: {{ author.age() }} ans</p>
+  <input type="date" [(ngModel)]="author.birthday">
+</div>

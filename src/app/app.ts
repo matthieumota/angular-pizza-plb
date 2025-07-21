@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Pizza } from './models/pizza';
 import { CommonModule } from '@angular/common';
 import { Pizza as PizzaComponent } from './components/pizza/pizza';
+import { Counter } from './components/counter/counter';
+import { Author } from './components/author/author';
+import { User } from './models/user';
 
 const PIZZAS: Pizza[] = [
   { id: 1, name: 'Reine', price: 12, image: '/assets/pizzas/reine.jpg' },
@@ -12,7 +15,7 @@ const PIZZAS: Pizza[] = [
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, PizzaComponent],
+  imports: [Author, CommonModule, Counter, PizzaComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -20,6 +23,7 @@ export class App {
   title: string = 'Mon super site avec Angular';
   selected!: Pizza;
   pizzas: Pizza[] = PIZZAS;
+  user = new User('Mota', 'Fiorella', '2019-12-31', 'https://randomuser.me/api/portraits/women/12.jpg');
 
   onSelect(pizza: Pizza) {
     console.log(pizza);
