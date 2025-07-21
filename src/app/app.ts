@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Pizza } from './models/pizza';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 const PIZZAS: Pizza[] = [
   { id: 1, name: 'Reine', price: 12, image: '/assets/pizzas/reine.jpg' },
@@ -11,13 +12,18 @@ const PIZZAS: Pizza[] = [
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
   title: string = 'Mon super site avec Angular';
   name: string = '4 fromages';
-  pizza: Pizza = new Pizza(1, 'Reine', 12, '/assets/pizzas/reine.jpg');
+  selected!: Pizza;
   pizzas: Pizza[] = PIZZAS;
+
+  onSelect(pizza: Pizza) {
+    console.log(pizza);
+    this.selected = { ...pizza };
+  }
 }

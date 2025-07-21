@@ -1,15 +1,30 @@
-<h1>{{ title }}</h1>
-<h2 [title]="pizza.name">{{ pizza.name }}</h2>
-<p>Prix: {{ pizza.price }}</p>
-<img [src]="pizza.image" [alt]="pizza.name" />
-<input [(ngModel)]="pizza.name" placeholder="Nom">
-<input [value]="pizza.name" (input)="pizza.name = $any($event.target).value">
+<div class="max-w-7xl mx-auto">
+  <h1>{{ title }}</h1>
 
-<ul class="pizzas">
-  @for (pizza of pizzas; track pizza.id) {
-    <li>
-      <span>{{ pizza.id }}: {{ pizza.name }}</span>
-      <img [src]="pizza.image" [alt]="pizza.name" />
-    </li>
+  @if (selected) {
+    <h2 [title]="selected.name">{{ selected.name }}</h2>
+    <p>Prix: {{ selected.price }}</p>
+    <img [src]="selected.image" [alt]="selected.name" />
+    <input [(ngModel)]="selected.name" placeholder="Nom">
+    <input [value]="selected.name" (input)="selected.name = $any($event.target).value">
   }
-</ul>
+
+  <ul class="flex gap-8">
+    @for (pizza of pizzas; track pizza.id) {
+      <li (click)="onSelect(pizza)" class="border border-transparent cursor-pointer" [ngClass]="{
+        '!border-gray-900 rounded-lg': selected && pizza.id === selected.id,
+      }">
+        <img [src]="pizza.image" [alt]="pizza.name" [class.rounded-t-lg]="selected && pizza.id === selected.id" />
+        <h2 class="text-xl text-center py-2">{{ pizza.id }}: {{ pizza.name }}</h2>
+      </li>
+    }
+  </ul>
+
+  <ul class="pizzas">
+    <ng-container *ngFor="let pizza of pizzas">
+      <li *ngIf="true">
+        {{ pizza.name }}
+      </li>
+    </ng-container>
+  </ul>
+</div>
