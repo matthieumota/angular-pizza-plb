@@ -21,12 +21,17 @@ const PIZZAS: Pizza[] = [
 })
 export class App {
   title: string = 'Mon super site avec Angular';
-  selected!: Pizza;
+  selected!: Pizza | null;
   pizzas: Pizza[] = PIZZAS;
   user = new User('Mota', 'Fiorella', '2019-12-31', 'https://randomuser.me/api/portraits/women/12.jpg');
 
   onSelect(pizza: Pizza) {
     console.log(pizza);
     this.selected = { ...pizza };
+  }
+
+  onCancel(event: Pizza) {
+    console.log(event)
+    this.selected = null
   }
 }

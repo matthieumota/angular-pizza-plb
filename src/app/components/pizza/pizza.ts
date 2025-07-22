@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Pizza as PizzaModel } from '../../models/pizza';
 import { FormsModule } from '@angular/forms';
 
@@ -10,4 +10,5 @@ import { FormsModule } from '@angular/forms';
 })
 export class Pizza {
   @Input() selected!: PizzaModel;
+  @Output() canceled = new EventEmitter<PizzaModel>();
 }
