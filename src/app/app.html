@@ -12,17 +12,19 @@
       }">
         <img [src]="pizza.image" [alt]="pizza.name" [class.rounded-t-lg]="selected && pizza.id === selected.id" />
         <h2 class="text-xl text-center py-2">{{ pizza.id }}: {{ pizza.name }}</h2>
+        <button (click)="delete($event, pizza)">X</button>
       </li>
     }
   </ul>
 
-  <ul class="pizzas">
-    <ng-container *ngFor="let pizza of pizzas">
-      <li *ngIf="true">
-        {{ pizza.name }}
-      </li>
-    </ng-container>
-  </ul>
+  <button (click)="toggleNewPizza()">
+    Ajouter une pizza
+  </button>
+
+  <div *ngIf="showNewPizza">
+    <input class="border border-gray-500" type="text" [(ngModel)]="newPizza.name" (keydown)="save($event)">
+    <input class="border border-gray-500" type="text" [(ngModel)]="newPizza.price" (keydown)="save($event)">
+  </div>
 
   <app-counter (changed)="total += $event"></app-counter>
   <app-counter [value]="10" (changed)="total += $event"></app-counter>

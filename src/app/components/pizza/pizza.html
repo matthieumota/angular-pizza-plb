@@ -5,3 +5,4 @@
 <input [ngModel]="selected.name" (ngModelChange)="selected.name = $event" placeholder="Nom">
 <input [value]="selected.name" (input)="selected.name = $any($event.target).value">
 <button (click)="canceled.emit(selected)">Annuler</button>
+<button (click)="save()">Mettre à jour</button>

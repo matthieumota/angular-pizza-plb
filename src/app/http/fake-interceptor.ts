@@ -70,6 +70,12 @@ export class FakeInterceptor implements HttpInterceptor {
       let pizza = pizzas.find(p => p.id === idFromUrl());
       pizza = { ...pizza, ...body };
 
+      if (!pizza) {
+        return response('Not found', 404);
+      }
+
+      pizzas = pizzas.map(p => p.id === idFromUrl() ? pizza : p);
+
       syncStorage();
 
       return response(pizza);

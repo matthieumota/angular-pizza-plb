@@ -7,11 +7,12 @@ import { Author } from './components/author/author';
 import { User } from './models/user';
 import { PizzaService } from './services/pizza';
 import { Message, MessageService } from './services/message';
-import { filter, map, repeat } from 'rxjs';
+import { filter, repeat, switchMap } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [Author, CommonModule, Counter, PizzaComponent],
+  imports: [Author, CommonModule, Counter, PizzaComponent, FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -22,6 +23,8 @@ export class App implements OnInit {
   user = new User('Mota', 'Fiorella', '2019-12-31', 'https://randomuser.me/api/portraits/women/12.jpg');
   total: number = 0
   messages: Message[] = []
+  showNewPizza: boolean = false
+  newPizza: Pizza = new Pizza(0, '', 0, '/assets/pizzas/cannibale.jpg')
 
   constructor(
     private pizzaService: PizzaService,
@@ -36,6 +39,13 @@ export class App implements OnInit {
     ).subscribe(r => {
       console.log(r)
       this.pizzas = this.pizzas.concat(r)
+    })
+
+    this.pizzaService.events.pipe(
+      filter(event => event === 'update'),
+      switchMap(() => this.pizzaService.getPizzas())
+    ).subscribe(pizzas => {
+      this.pizzas = pizzas
     })
 
     // let that = this
@@ -58,5 +68,41 @@ export class App implements OnInit {
 
   deleteMessage(index: number) {
     this.messageService.deleteMessage(index)
+  }
+
+  delete(event: Event, pizza: Pizza) {
+    event.stopPropagation()
+
+    if (!confirm('Voulez-vous vraiment supprimer cette pizza ?')) return
+
+    this.pizzaService.deletePizza(pizza.id).subscribe(_ => {
+      this.pizzas = this.pizzas.filter(p => p.id !== pizza.id)
+    })
+  }
+
+  toggleNewPizza() {
+    this.showNewPizza = !this.showNewPizza
+  }
+
+  save(event: KeyboardEvent) {
+    if (event.key !== 'Enter') return
+
+    if (!this.newPizza.name || !this.newPizza.price) return
+
+    this.pizzaService.createPizza(this.newPizza).pipe(
+      switchMap(() => this.pizzaService.getPizzas())
+    ).subscribe(pizzas => {
+      this.pizzas = pizzas
+      this.toggleNewPizza()
+      this.newPizza = new Pizza(0, '', 0, '/assets/pizzas/cannibale.jpg')
+    })
+
+    // this.pizzaService.createPizza(this.newPizza).subscribe(_ => {
+    //   this.toggleNewPizza()
+    //   this.newPizza = new Pizza(0, '', 0, '/assets/pizzas/cannibale.jpg')
+    //   this.pizzaService.getPizzas().subscribe(pizzas => {
+    //     this.pizzas = pizzas
+    //   })
+    // })
   }
 }
