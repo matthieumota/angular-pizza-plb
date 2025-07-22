@@ -11,4 +11,12 @@ import { FormsModule } from '@angular/forms';
 export class Pizza {
   @Input() selected!: PizzaModel;
   @Output() canceled = new EventEmitter<PizzaModel>();
+
+  constructor() {
+    console.log('CONSTRUCTOR', this.selected)
+  }
+
+  ngOnInit() {
+    console.log('ngOnInit', this.selected)
+  }
 }
