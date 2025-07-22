@@ -7,6 +7,7 @@ import { Author } from './components/author/author';
 import { User } from './models/user';
 import { PizzaService } from './services/pizza';
 import { Message, MessageService } from './services/message';
+import { filter, map, repeat } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -28,12 +29,19 @@ export class App implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.pizzaService.getPizzas().then(r => this.pizzas = r)
-
-    let that = this
-    this.pizzaService.getPizzas().then(function (r) {
-      that.pizzas = r
+    this.pizzaService.getPizzas().pipe(
+      repeat(3),
+      // map((pizzas: Pizza[]) => pizzas.filter(p => p.name !== 'Reine')),
+      filter((p: Pizza[]) => this.pizzas.length < 3)
+    ).subscribe(r => {
+      console.log(r)
+      this.pizzas = this.pizzas.concat(r)
     })
+
+    // let that = this
+    // this.pizzaService.getPizzas().subscribe(function (r) {
+    //   that.pizzas = r
+    // })
 
     this.messages = this.messageService.getMessages()
   }
