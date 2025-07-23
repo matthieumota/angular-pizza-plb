@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Pizza } from './models/pizza';
-import { PizzaService } from './services/pizza';
-import { filter, repeat, switchMap } from 'rxjs';
+import { Component } from '@angular/core';
 import { AppModule } from './modules/app/app-module';
 
 @Component({
@@ -10,83 +7,6 @@ import { AppModule } from './modules/app/app-module';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App implements OnInit {
+export class App {
   title: string = 'Mon super site avec Angular';
-  selected!: Pizza | null;
-  pizzas: Pizza[] = [];
-  showNewPizza: boolean = false
-  newPizza: Pizza = new Pizza(0, '', 0, '/assets/pizzas/cannibale.jpg')
-
-  constructor(
-    private pizzaService: PizzaService
-  ) {}
-
-  ngOnInit() {
-    this.pizzaService.getPizzas().pipe(
-      repeat(3),
-      // map((pizzas: Pizza[]) => pizzas.filter(p => p.name !== 'Reine')),
-      filter((p: Pizza[]) => this.pizzas.length < 3)
-    ).subscribe(r => {
-      console.log(r)
-      this.pizzas = this.pizzas.concat(r)
-    })
-
-    this.pizzaService.events.pipe(
-      filter(event => event === 'update'),
-      switchMap(() => this.pizzaService.getPizzas())
-    ).subscribe(pizzas => {
-      this.pizzas = pizzas
-    })
-
-    // let that = this
-    // this.pizzaService.getPizzas().subscribe(function (r) {
-    //   that.pizzas = r
-    // })
-  }
-
-  onSelect(pizza: Pizza) {
-    console.log(pizza);
-    this.selected = { ...pizza };
-  }
-
-  onCancel(event: Pizza) {
-    console.log(event)
-    this.selected = null
-  }
-
-  delete(event: Event, pizza: Pizza) {
-    event.stopPropagation()
-
-    if (!confirm('Voulez-vous vraiment supprimer cette pizza ?')) return
-
-    this.pizzaService.deletePizza(pizza.id).subscribe(_ => {
-      this.pizzas = this.pizzas.filter(p => p.id !== pizza.id)
-    })
-  }
-
-  toggleNewPizza() {
-    this.showNewPizza = !this.showNewPizza
-  }
-
-  save(event: KeyboardEvent) {
-    if (event.key !== 'Enter') return
-
-    if (!this.newPizza.name || !this.newPizza.price) return
-
-    this.pizzaService.createPizza(this.newPizza).pipe(
-      switchMap(() => this.pizzaService.getPizzas())
-    ).subscribe(pizzas => {
-      this.pizzas = pizzas
-      this.toggleNewPizza()
-      this.newPizza = new Pizza(0, '', 0, '/assets/pizzas/cannibale.jpg')
-    })
-
-    // this.pizzaService.createPizza(this.newPizza).subscribe(_ => {
-    //   this.toggleNewPizza()
-    //   this.newPizza = new Pizza(0, '', 0, '/assets/pizzas/cannibale.jpg')
-    //   this.pizzaService.getPizzas().subscribe(pizzas => {
-    //     this.pizzas = pizzas
-    //   })
-    // })
-  }
 }

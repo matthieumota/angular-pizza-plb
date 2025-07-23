@@ -7,29 +7,4 @@
   </nav>
 
   <router-outlet></router-outlet>
-
-  @if (selected) {
-    <app-pizza [selected]="selected" (canceled)="onCancel($event)"></app-pizza>
-  }
-
-  <ul class="flex gap-8">
-    @for (pizza of pizzas; track pizza.id) {
-      <li (click)="onSelect(pizza)" class="border border-transparent cursor-pointer" [ngClass]="{
-        '!border-gray-900 rounded-lg': selected && pizza.id === selected.id,
-      }">
-        <img [src]="pizza.image" [alt]="pizza.name" [class.rounded-t-lg]="selected && pizza.id === selected.id" />
-        <h2 class="text-xl text-center py-2">{{ pizza.id }}: {{ pizza.name }}</h2>
-        <button (click)="delete($event, pizza)">X</button>
-      </li>
-    }
-  </ul>
-
-  <button (click)="toggleNewPizza()">
-    Ajouter une pizza
-  </button>
-
-  <div *ngIf="showNewPizza">
-    <input class="border border-gray-500" type="text" [(ngModel)]="newPizza.name" (keydown)="save($event)">
-    <input class="border border-gray-500" type="text" [(ngModel)]="newPizza.price" (keydown)="save($event)">
-  </div>
 </div>
