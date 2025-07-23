@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Pizza } from '../../models/pizza';
 import { PizzaService } from '../../services/pizza';
-import { filter, repeat, switchMap } from 'rxjs';
+import { filter, Observable, repeat, switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Pizza as PizzaComponent } from '../../components/pizza/pizza';
@@ -16,6 +16,7 @@ import { RouterLink } from '@angular/router';
 export class Pizzas {
   selected!: Pizza | null;
   pizzas: Pizza[] = [];
+  $pizzas!: Observable<Pizza[]>;
   showNewPizza: boolean = false
   newPizza: Pizza = new Pizza(0, '', 0, '/assets/pizzas/cannibale.jpg')
 
@@ -24,6 +25,8 @@ export class Pizzas {
   ) {}
 
   ngOnInit() {
+    this.$pizzas = this.pizzaService.getPizzas()
+
     this.pizzaService.getPizzas().pipe(
       repeat(3),
       // map((pizzas: Pizza[]) => pizzas.filter(p => p.name !== 'Reine')),

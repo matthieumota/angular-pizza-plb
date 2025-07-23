@@ -3,7 +3,7 @@
 }
 
 <ul class="flex gap-8">
-  @for (pizza of pizzas; track pizza.id) {
+  @for (pizza of $pizzas | async; track pizza.id) {
     <li (click)="onSelect(pizza)" class="border border-transparent cursor-pointer" [ngClass]="{
       '!border-gray-900 rounded-lg': selected && pizza.id === selected.id,
     }">

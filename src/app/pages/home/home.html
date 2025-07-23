@@ -6,6 +6,8 @@
 
 <p>Total: {{ total }}</p>
 
+<p>Environnement : {{ apiUrl }}</p>
+
 <ul>
   <li *ngFor="let message of messages; index as i">
     <h3>{{ message.message }} ({{ message.type }})</h3>
@@ -14,3 +16,21 @@
 </ul>
 
 <app-author [author]="user" />
+
+<form (ngSubmit)="login(userForm)" #userForm="ngForm" class="space-y-4" [ngFormOptions]="{ updateOn: 'change' }">
+  <div>
+    <label class="block">Username</label>
+    <input class="border border-gray-300" name="username" [(ngModel)]="authUser.username" required minlength="3" #username="ngModel">
+    <div *ngIf="(userForm.submitted || username.dirty) && username.hasError('required')">Username is required</div>
+    <div *ngIf="(userForm.submitted || username.dirty) && username.hasError('minlength')">
+      Username should be {{ username.getError('minlength').actualLength }}/3 characters min
+    </div>
+  </div>
+  <div>
+    <label class="block">Password</label>
+    <input class="border border-gray-300" type="password" name="password" [(ngModel)]="authUser.password" required #password="ngModel">
+    <div *ngIf="(userForm.submitted || password.dirty) && password.hasError('required')">Password is required</div>
+  </div>
+
+  <button class="border px-2 py-1 rounded-lg disabled:opacity-50">Connexion</button>
+</form>
