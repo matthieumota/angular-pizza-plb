@@ -19,5 +19,16 @@ describe('Home', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+
+    expect(component.total).toBe(60);
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('#total')?.textContent).toContain('Total: 60');
+
+    const button = compiled.querySelector('.increment') as HTMLButtonElement;
+    button?.click();
+    fixture.componentRef.setInput('total', 61);
+    fixture.detectChanges();
+    expect(compiled.querySelector('#total')?.textContent).toContain('Total: 61');
   });
 });

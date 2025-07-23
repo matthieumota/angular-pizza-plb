@@ -4,7 +4,7 @@
 <app-counter [value]="15" (changed)="total += $event"></app-counter>
 <app-counter [value]="35" (changed)="total += $event"></app-counter>
 
-<p>Total: {{ total }}</p>
+<p id="total">Total: {{ total }}</p>
 
 <p>Environnement : {{ apiUrl }}</p>
 
