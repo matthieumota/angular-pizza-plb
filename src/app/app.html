@@ -1,6 +1,13 @@
 <div class="max-w-7xl mx-auto">
   <h1>{{ title }}</h1>
 
+  <nav>
+    <a routerLink="/">Accueil</a>
+    <a routerLink="/pizzas">Pizzas</a>
+  </nav>
+
+  <router-outlet></router-outlet>
+
   @if (selected) {
     <app-pizza [selected]="selected" (canceled)="onCancel($event)"></app-pizza>
   }
@@ -25,21 +32,4 @@
     <input class="border border-gray-500" type="text" [(ngModel)]="newPizza.name" (keydown)="save($event)">
     <input class="border border-gray-500" type="text" [(ngModel)]="newPizza.price" (keydown)="save($event)">
   </div>
-
-  <app-counter (changed)="total += $event"></app-counter>
-  <app-counter [value]="10" (changed)="total += $event"></app-counter>
-  <app-counter (changed)="total += $event"></app-counter>
-  <app-counter [value]="15" (changed)="total += $event"></app-counter>
-  <app-counter [value]="35" (changed)="total += $event"></app-counter>
-
-  <p>Total: {{ total }}</p>
-
-  <ul>
-    <li *ngFor="let message of messages; index as i">
-      <h3>{{ message.message }} ({{ message.type }})</h3>
-      <button (click)="deleteMessage(i)">X</button>
-    </li>
-  </ul>
-
-  <app-author [author]="user" />
 </div>

@@ -1,1 +1,16 @@
-<p>home works!</p>
+<app-counter (changed)="total += $event"></app-counter>
+<app-counter [value]="10" (changed)="total += $event"></app-counter>
+<app-counter (changed)="total += $event"></app-counter>
+<app-counter [value]="15" (changed)="total += $event"></app-counter>
+<app-counter [value]="35" (changed)="total += $event"></app-counter>
+
+<p>Total: {{ total }}</p>
+
+<ul>
+  <li *ngFor="let message of messages; index as i">
+    <h3>{{ message.message }} ({{ message.type }})</h3>
+    <button (click)="deleteMessage(i)">X</button>
+  </li>
+</ul>
+
+<app-author [author]="user" />

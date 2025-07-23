@@ -1,19 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Pizza } from './models/pizza';
-import { CommonModule } from '@angular/common';
-import { Pizza as PizzaComponent } from './components/pizza/pizza';
-import { Counter } from './components/counter/counter';
-import { Author } from './components/author/author';
-import { User } from './models/user';
 import { PizzaService } from './services/pizza';
-import { Message, MessageService } from './services/message';
 import { filter, repeat, switchMap } from 'rxjs';
-import { FormsModule } from '@angular/forms';
 import { AppModule } from './modules/app/app-module';
 
 @Component({
   selector: 'app-root',
-  imports: [Author, Counter, PizzaComponent, FormsModule, AppModule],
+  imports: [AppModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -21,15 +14,11 @@ export class App implements OnInit {
   title: string = 'Mon super site avec Angular';
   selected!: Pizza | null;
   pizzas: Pizza[] = [];
-  user = new User('Mota', 'Fiorella', '2019-12-31', 'https://randomuser.me/api/portraits/women/12.jpg');
-  total: number = 0
-  messages: Message[] = []
   showNewPizza: boolean = false
   newPizza: Pizza = new Pizza(0, '', 0, '/assets/pizzas/cannibale.jpg')
 
   constructor(
-    private pizzaService: PizzaService,
-    private messageService: MessageService
+    private pizzaService: PizzaService
   ) {}
 
   ngOnInit() {
@@ -53,8 +42,6 @@ export class App implements OnInit {
     // this.pizzaService.getPizzas().subscribe(function (r) {
     //   that.pizzas = r
     // })
-
-    this.messages = this.messageService.getMessages()
   }
 
   onSelect(pizza: Pizza) {
@@ -65,10 +52,6 @@ export class App implements OnInit {
   onCancel(event: Pizza) {
     console.log(event)
     this.selected = null
-  }
-
-  deleteMessage(index: number) {
-    this.messageService.deleteMessage(index)
   }
 
   delete(event: Event, pizza: Pizza) {
