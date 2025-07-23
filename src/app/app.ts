@@ -9,10 +9,11 @@ import { PizzaService } from './services/pizza';
 import { Message, MessageService } from './services/message';
 import { filter, repeat, switchMap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { AppModule } from './modules/app/app-module';
 
 @Component({
   selector: 'app-root',
-  imports: [Author, CommonModule, Counter, PizzaComponent, FormsModule],
+  imports: [Author, Counter, PizzaComponent, FormsModule, AppModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
