@@ -4,6 +4,9 @@
   "newProjectRoot": "projects",
   "projects": {
     "pizzaparty": {
+      "i18n": {
+        "sourceLocale": "fr"
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {

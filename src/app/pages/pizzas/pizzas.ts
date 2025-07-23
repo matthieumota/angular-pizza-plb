@@ -5,10 +5,11 @@ import { filter, repeat, switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Pizza as PizzaComponent } from '../../components/pizza/pizza';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-pizzas',
-  imports: [CommonModule, FormsModule, PizzaComponent],
+  imports: [CommonModule, FormsModule, PizzaComponent, RouterLink],
   templateUrl: './pizzas.html',
   styleUrl: './pizzas.scss'
 })

@@ -1,0 +1,16 @@
+<div *ngIf="loading">
+  <p class="animate-bounce">Chargement...</p>
+</div>
+
+<div *ngIf="pizza && !loading">
+  <!-- {{ pizza | json | uppercase }} -->
+  <div class="flex items-center gap-16">
+    <img class="rounded-full" [src]="pizza.image" [alt]="pizza.name">
+    <div>
+      <h1 class="text-3xl">{{ pizza.name }}</h1>
+      <p>{{ pizza.price | number: '1.2' : 'fr' }}</p>
+    </div>
+  </div>
+
+  <a routerLink="/pizzas/3">Go to 3</a>
+</div>

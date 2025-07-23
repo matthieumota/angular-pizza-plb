@@ -10,6 +10,9 @@
       <img [src]="pizza.image" [alt]="pizza.name" [class.rounded-t-lg]="selected && pizza.id === selected.id" />
       <h2 class="text-xl text-center py-2">{{ pizza.id }}: {{ pizza.name }}</h2>
       <button (click)="delete($event, pizza)">X</button>
+      <a routerLink="/pizzas/{{ pizza.id }}">Voir</a>
+      <a [routerLink]="`/pizzas/${pizza.id}`">Voir</a>
+      <a [routerLink]="['/pizzas', pizza.id]">Voir</a>
     </li>
   }
 </ul>

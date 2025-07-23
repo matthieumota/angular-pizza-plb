@@ -15,6 +15,10 @@ export class PizzaService {
     return this.http.get<Pizza[]>('/api/pizzas');
   }
 
+  getPizza(id: number): Observable<Pizza> {
+    return this.http.get<Pizza>(`/api/pizzas/${id}`)
+  }
+
   deletePizza(id: number): Observable<void> {
     return this.http.delete<void>(`/api/pizzas/${id}`)
   }
